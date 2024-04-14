@@ -1,0 +1,17 @@
+{
+  "name": "tomcat debug",
+  "shutdownAction": "none",
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
+  "service": "java",
+  "workspaceFolder": "/work",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "samuel-weinhardt.vscode-jsp-lang",
+      ]
+    }
+  }
+}

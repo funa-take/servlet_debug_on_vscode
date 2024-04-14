@@ -1,0 +1,11 @@
+FROM openjdk:11
+
+RUN apt update && apt install -y maven sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+ARG UID
+ARG GID
+RUN useradd -m -u ${UID} -U user
+RUN groupmod -g ${GID} user
+RUN gpasswd -a user sudo
+USER user

@@ -1,0 +1,36 @@
+version: '3'
+services:
+  java:
+    build:
+      context: ./java
+      dockerfile: ./dockerfile
+      args:
+        - UID=${UID}
+        - GID=${GID}
+    volumes:
+      - ./servlet:/work
+      - m2:/home/user/.m2
+      - vscode:/home/user/.vscode-server
+    # ports:
+    #   - 8080:8080
+    working_dir: /work
+    command: sleep infinity
+  tomcat:
+    build:
+      context: ./tomcat
+      dockerfile: ./dockerfile
+    environment:
+      JPDA_ADDRESS: 0.0.0.0:8000
+    volumes:
+      - ./:/work
+      - ./tomcat/server.xml:/usr/local/tomcat/conf/server.xml
+      - ./tomcat/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+      - ./tomcat/context.xml:/usr/local/tomcat/webapps/manager/META-INF/context.xml
+    working_dir: /work
+    command: catalina.sh jpda run
+    ports:
+      - 8080:8080
+
+volumes:
+  m2:
+  vscode:
